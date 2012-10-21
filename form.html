@@ -1,0 +1,178 @@
+<html>
+<head>
+<title>Video Converter</title>
+<style type="text/css">
+html {height:100%;}
+table {font-smooth:always; font-family:helvetica; font-size:18px;}
+</style>
+
+<script type="text/javascript" src="./js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="./js/jquery.validate.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#converter").validate({
+			submitHandler: function(form) {
+				// do other stuff for a valid form
+				$.post('HandBrake.php', $("#converter").serialize(), function(data) {
+					$('#results').html(data);
+				});
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+	<br>
+
+
+
+
+<form name="converter" id="converter" action="HandBrake.php" method="POST">
+		<table align="center">
+			<tr>
+				<td align="right">Input File</td>
+				<td><select name="input">
+									<option value="1.flv">1.flv</option>
+									<option value="2.flv">2.flv</option>
+									<option value="3.flv">3.flv</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td align="right">Output File Name </td>
+				<td><input type="text" name="name" autocomplete="off" value="output"/></td>
+			</tr>
+			<tr>
+				<td align="right" >Output File Extension </td>
+				<td>
+					<select name="format">
+									<option selected="selected" value="mp4">mp4</option>
+									<option value="flv">flv</option>
+					</select>
+				</td>
+			</tr>
+		</table>
+		<table align="center">
+			<tr>
+				<th>Picture</th>
+				<th>Video</th>
+				<th>Audio</th>
+			</tr>
+			<tr>
+				<td>
+					<table>
+						<tr>
+							<td align="right" >Width </td>
+							<td><input size="3" type="text" name="width" autocomplete="off" value="320"/></td>
+						</tr>
+						<tr>
+							<td align="right" >Height </td>
+							<td><input size="3" type="text" name="height" autocomplete="off" value="240"/></td>
+						</tr>
+						<tr>
+							<td align="right" >Keep Aspect Ratio</td>
+							<td><input type="checkbox" name="kar"/></td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table>
+						<tr>
+							<td align="right" >Codec</td>
+							<td>
+								<select name="encoder">
+									<option selected="selected" value="x264">H.264 (x264)</option>
+									<option value="ffmpeg4">MPEG-4 (ffmpeg)</option>
+									<option value="ffmpeg2">MPEG-2 (ffmpeg)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" >Framerate (FPS)</td>
+							<td>
+								<select name="fps">
+									<option selected="selected" value="source">Same as source</option>
+									<option value="5">5</option>
+									<option value="10">10</option>
+									<option value="12">12</option>
+									<option value="15">15</option>
+									<option value="23.976">23.976 (NTSC film)</option>
+									<option value="24">24</option>
+									<option value="25">25 (PAL film/video)</option>
+									<option value="29.97">29.97 (NTSC video)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input selected="selected" type="radio" name="vq" value="cons" checked/>Constant Quality </br>
+								
+							</td>
+							<td>
+								RF (1 to 51) <input size="2" type="text" name="quality" autocomplete="off" value="21"/><br>
+								
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="radio" name="vq" value="avbr" />Average Bitrate
+							</td>
+							<td>
+								Bitrate (in kbps)<input size="4" type="text" name="vbitrate" autocomplete="off" value="1500"/><br>
+								<input type="checkbox" name="twopass"/>2 Pass Filter
+								<input type="checkbox" name="turbo"/>Turbo First Pass
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<input type="radio" name="vq" value="targsize" />Set Target Size 
+							</td>
+							<td>
+								Target Size (in MB)<input size="4" type="text" name="size" autocomplete="off" value="10"/><br>
+							</td>
+						</tr>
+					</table>
+				</td>
+				<td>
+					<table>
+						<tr>
+							<td align="right" >Sampling Rate </td>
+							<td>
+								<select name="samplingrate">
+									<option selected="selected" value="auto">Auto</option>
+									<option value="22.05">22.05</option>
+									<option value="24">24</option>
+									<option value="32">32</option>
+									<option value="44.1">44.1</option>
+									<option value="48">48</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td align="right" >Bitrate</td>
+							<td>
+								<select name="abitrate">
+									<option value="64">64</option>
+									<option value="80">80</option>
+									<option value="96">96</option>
+									<option value="112">112</option>
+									<option value="128">128</option>
+									<option selected="selected" value="160">160</option>
+									<option value="192">192</option>
+									<option value="224">224</option>
+									<option value="256">256</option>
+									<option value="320">320</option>
+								</select>
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+<br>
+<div align="center"> <input style="font-smooth:always; font-family:helvetica; font-size:18px;" type="submit" value="Convert"/></div>
+</form>
+<div id="results"><div>
+</body>
+</html>
